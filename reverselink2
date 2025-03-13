@@ -1,0 +1,20 @@
+struct ListNode* reverseBetween(struct ListNode* head, int left, int right) {
+    struct ListNode ans;
+    ans.next= head;
+    struct ListNode* begin = &ans;
+    for(int i = 1;i<left;i++)
+        begin = begin ->next;
+    
+    struct ListNode* start = begin->next;
+    struct ListNode* prev = NULL;
+    for(int i = left ;i<=right;i++)
+    {
+        struct ListNode* tmp2 = start -> next;
+        start->next=prev;
+        prev = start;
+        start = tmp2;
+    }
+    begin->next->next = start;
+    begin->next = prev;
+    return ans.next;
+}
