@@ -1,0 +1,40 @@
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+
+
+int* arrayRankTransform(int* arr, int arrSize, int* returnSize) {
+    int *ans = malloc(arrSize *  sizeof(int));
+    for(int i = 0; i< arrSize; i++ )
+    {
+        ans[i]=arr[i];
+    }
+
+    qsort(ans, arrsize sizeof(int), compare)
+    int* ranks = (int*)malloc(arrSize * sizeof(int));
+    int rank = 1;
+    ranks[0] = rank;
+
+    for (int i = 1; i < arrSize; i++) {
+        if (ans[i] > ans[i - 1]) {
+            rank++;
+        }
+        ranks[i] = rank;
+    }
+
+    int* result = (int*)malloc(arrSize * sizeof(int));
+    for (int i = 0; i < arrSize; i++) {
+        for (int j = 0; j < arrSize; j++) {
+            if (arr[i] == ans[j]) {
+                result[i] = ranks[j];
+                break;
+            }
+        }
+    }
+
+    free(ans);
+    free(ranks);
+    *returnSize = arrSize;
+    return result;
+}
