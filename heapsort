@@ -1,0 +1,45 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+void swap (int *a, int *b)
+{
+    int tmp = 0 ;
+    tmp = *a;
+    *a = *b;
+    *b = tmp ;
+}
+
+void heapmax(int* nums, int numsSize, int index)
+{
+    int max = index;
+    int left = 2*index +1;
+    int right = 2*index +2;
+    if(left<numsSize && nums[left] > nums[max])
+        max = left;
+    if(right<numsSize && nums[right] > nums[max])
+        max = right;
+    if(max!=index){
+        swap (&nums[index], &nums[max]);
+        heapmax(nums, numsSize, max);
+    }
+}   
+
+void heapsort(int* nums, int numsSize) 
+{
+    for(int i = numsSize/2-1; i>=0;i--)
+    {
+        heapmax(nums, numsSize, i);
+    }
+    for (int i = numsSize-1 ;i>0; i--)
+    {
+        swap (&nums[0], &nums[i]); 
+        heapmax(nums, i, 0);
+    }
+}
+
+
+int* sortArray(int* nums, int numsSize, int* returnSize) {
+    heapsort(nums, numsSize);
+    * returnSize = numsSize;
+    return nums;
+}
